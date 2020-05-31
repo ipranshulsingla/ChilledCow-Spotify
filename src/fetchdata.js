@@ -18,8 +18,11 @@ export function fetchData(credentials){
     var promise=SpotifyGraphQLClient(credentials).query(`{
             user(id:"chilledcow"){
               id
-                  display_name
+              display_name
               href
+              images{
+                url
+              }
               playlists{
                 id
                 description
@@ -28,9 +31,13 @@ export function fetchData(credentials){
                 images{
                   url
                 }
+                tracks{
+                  track{
+                    artists{
+                      name
+                    }
+                  }
                 }
-              images{
-                url
               }
             }
     }`)
@@ -40,4 +47,19 @@ export function fetchData(credentials){
 export function fetchFollowers(href){
     var promise=fetch(href)
     return promise
+}
+
+export function extractArtists(data){
+  let artists=[];
+  data.playlists.forEach(playlist=>{
+    playlist.tracks.forEach(eachTrack=>{
+      eachTrack.track.artists.forEach(artist=>{
+        if(artists.indexOf(artist.name)<0){
+          artists.push(artist.name)
+        }
+      })
+    })
+  })
+  console.log(artists.sort())
+  return artists
 }

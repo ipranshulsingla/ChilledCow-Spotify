@@ -2,4 +2,5 @@ import {Overview} from './Overview'
 import {Featured} from './Featured'
 import {Playlist} from './Playlist'
 import {Navbar} from './Navbar'
-export {Overview,Featured,Playlist,Navbar}
+import {FeaturedDropdown} from './FeaturedDropdown'
+export {Overview,Featured,Playlist,Navbar,FeaturedDropdown}

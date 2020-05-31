@@ -1,7 +1,7 @@
 import React,{PureComponent} from 'react'
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import {Overview,Featured,Playlist,Navbar} from './Components'
-import fetchAccessToken, { fetchData, fetchFollowers} from './fetchdata'
+import fetchAccessToken, { fetchData, fetchFollowers, extractArtists} from './fetchdata'
 import main from './css/main.module.css'
 import config from './config.json'
 export default class App extends PureComponent{
@@ -13,7 +13,7 @@ export default class App extends PureComponent{
     render(){
         return <div className={main.container}>
          <Router>
-            <Navbar/>
+            <Navbar artists={this.state.artists}/>
             <Switch>
                 <Route exact path="/"> <Overview 
                 displayName={this.state.display_name}
@@ -25,7 +25,8 @@ export default class App extends PureComponent{
                 <Route path="/playlist"> <Playlist
                 playlists={this.state.playlists}
                 /> </Route>
-                <Route path="/featured"> <Featured/> </Route>
+                <Route path="/featured"> <Featured/>
+                 </Route>
             </Switch> 
          </Router>
         </div>
@@ -37,6 +38,7 @@ export default class App extends PureComponent{
         let {followers:{total},external_urls:{spotify}}=(await (await fetchFollowers(data.href)).json())
         data.followers=total
         data.profileUrl=spotify
+        data.artists=extractArtists(data)
         this.setState({...data})
     }
 } 
