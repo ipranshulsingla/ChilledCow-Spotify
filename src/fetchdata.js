@@ -60,6 +60,5 @@ export function extractArtists(data){
       })
     })
   })
-  console.log(artists.sort())
   return artists
 }

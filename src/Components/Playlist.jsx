@@ -5,7 +5,7 @@ import {NextArrow,PrevArrow} from "./CustomArrow"
 export const Playlist=(props)=>{
     const settings={
         dots: true,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
